@@ -28,7 +28,7 @@ function getEvenMoreData(data) {
 }
 
 getData()
-.then(getMoreData, err => console.log('getData hit error'))
+.then(getMoreData, err => { console.log('getData hit error'); return false; })
 // .then(getMoreData)
 // .then(getEvenMoreData, err => console.log('getMoreData hit error'))
 .then(getEvenMoreData)
@@ -38,7 +38,7 @@ getData()
 /* output
 "start getData"
 "getData hit error"
-"getEvenMoreData: previous undefined"
+"getEvenMoreData: previous false"
 "getEvenMoreData promise is evaludated"
 "data from getEvenMoreData: "
 NaN
@@ -46,5 +46,5 @@ NaN
 ```
 As sample above, getData got error and its then method provided a local error handler function. 
 At this case, the final catch won't be executed, and the chain is not been stopped, the getMoreData is skip obvisously as exepected, 
-but however, the getEvenMoreData is executed without data filled in. In my opinion it's weird, just skip all the following then
+but however, the getEvenMoreData is executed with data from getData's error handle function. In my opinion it's weird, just skip all the following then
 should be more intuitive.
